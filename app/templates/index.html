@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Xử lý ảnh</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+</head>
+<body>
+<h1>Xin chào. Đây là bài tập lớn môn xử lý ảnh</h1>
+
+
+<label for="myUploadImage">Select an image:</label>
+<input type="file" id="myUploadImage" name="myUploadImage" accept="image/*" onchange="loadFile(event)">
+<!--<button type="submit" name="submit" value="Submit" >Upload</button>-->
+
+<img id="showUploadImage" src="" style="display: none">
+<p id="buttonEvent"></p>
+<div id="result"></div>
+
+</body>
+</html>
