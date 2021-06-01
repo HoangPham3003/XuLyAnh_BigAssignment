@@ -31,7 +31,47 @@ function loadFile(event) {
 			}
 		})
 	})
+
+	var btRgbToHsv = document.createElement('a');
+	btRgbToHsv.href = '#';
+	btRgbToHsv.innerHTML = "RBG To HSV";
+	btRgbToHsv.addEventListener("click", function (event){
+		var data = new FormData();
+		data.append("Img_RGB_To_HSV", blob, fname);
+		$.ajax({
+			url: '/',
+			type: 'POST',
+			processData: false,
+			contentType: false,
+			data: data,
+			success: (ret) => {
+				var srcNewImg = ret.data;
+				$('#result').html('<img src="' + srcNewImg + '"/>');
+			}
+		})
+	})
+
+	var btFaceDetect = document.createElement('a');
+	btFaceDetect.href = '#';
+	btFaceDetect.innerHTML = "Face Detection";
+	btFaceDetect.addEventListener("click", function (event){
+		var data = new FormData();
+		data.append("Img_Face_Detection", blob, fname);
+		$.ajax({
+			url: '/',
+			type: 'POST',
+			processData: false,
+			contentType: false,
+			data: data,
+			success: (ret) => {
+				var srcNewImg = ret.data;
+				$('#result').html('<img src="' + srcNewImg + '"/>');
+			}
+		})
+	})
 	// =================================================================================================================
 	// =================================================================================================================
 	buttonEvent.appendChild(btRgbToGray)
+	buttonEvent.appendChild(btRgbToHsv)
+	buttonEvent.appendChild(btFaceDetect)
 }
