@@ -28,9 +28,9 @@ def face_detect(input_path, file_name):
 
     # Create link img render
     fname = file_name.split(".")[0]
-    output_path = ".\\app\\static\\img_Render\\" + fname + "_FaceDetected.jpg"
+    output_path = "./app/static/img_Render/" + fname + "_FaceDetected.jpg"
     cv.imwrite(output_path, img)
-    send_path = "..\\static\\img_Render\\" + fname + "_FaceDetected.jpg"
+    send_path = "../static/img_Render/" + fname + "_FaceDetected.jpg"
 
     cv.destroyAllWindows()
     return send_path
@@ -48,9 +48,9 @@ def rgb_to_gray(input_path, file_name):
 
     # Create link img render
     fname = file_name.split(".")[0]
-    output_path = ".\\app\\static\\img_Render\\" + fname + "_RgbToGray.jpg"
+    output_path = "./app/static/img_Render/" + fname + "_RgbToGray.jpg"
     cv.imwrite(output_path, img)
-    send_path = "..\\static\\img_Render\\" + fname + "_RgbToGray.jpg"
+    send_path = "../static/img_Render/" + fname + "_RgbToGray.jpg"
 
     cv.destroyAllWindows()
     return send_path
@@ -68,18 +68,12 @@ def rgb_to_hsv(input_path, file_name):
 
     # Create link img render
     fname = file_name.split(".")[0]
-    output_path = ".\\app\\static\\img_Render\\" + fname + "_RgbToHsv.jpg"
+    output_path = "./app/static/img_Render/" + fname + "_RgbToHsv.jpg"
     cv.imwrite(output_path, img)
-    send_path = "..\\static\\img_Render\\" + fname + "_RgbToHsv.jpg"
+    send_path = "../static/img_Render/" + fname + "_RgbToHsv.jpg"
 
     cv.destroyAllWindows()
     return send_path
-
-
-@app.route("/favicon.ico")
-def favicon():
-    return "", 200
-
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -91,10 +85,10 @@ def index():
                 fileName = secure_filename(file.filename)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], fileName))
 
-                file_path = ".\\app\\static\\img_Uploads\\" + str(fileName)
+                file_path = "./app/static/img_Uploads/" + str(fileName)
                 res = rgb_to_gray(file_path, fileName)
                 res = str(res)
-                return jsonify(data=[res])
+                return jsonify(data=res)
 
         elif type_processing == 'Img_RGB_To_HSV':
             file = request.files['Img_RGB_To_HSV']
@@ -102,10 +96,10 @@ def index():
                 fileName = secure_filename(file.filename)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], fileName))
 
-                file_path = ".\\app\\static\\img_Uploads\\" + str(fileName)
+                file_path = "./app/static/img_Uploads/" + str(fileName)
                 res = rgb_to_hsv(file_path, fileName)
                 res = str(res)
-                return jsonify(data=[res])
+                return jsonify(data=res)
 
         elif type_processing == 'Img_Face_Detection':
             file = request.files['Img_Face_Detection']
@@ -113,10 +107,10 @@ def index():
                 fileName = secure_filename(file.filename)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], fileName))
 
-                file_path = ".\\app\\static\\img_Uploads\\" + str(fileName)
+                file_path = "./app/static/img_Uploads/" + str(fileName)
                 res = face_detect(file_path, fileName)
                 res = str(res)
-                return jsonify(data=[res])
+                return jsonify(data=res)
 
     return render_template("index.html")
 
