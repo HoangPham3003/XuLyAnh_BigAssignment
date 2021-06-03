@@ -12,39 +12,41 @@ function process(blob, fname) {
   image.src = srcBlobImg;
   upload.addEventListener("input", function () {
     original.classList.add("tab-active");
+    new_hsv.classList.remove("tab-active");
     hsv.classList.remove("tab-active");
     detection.classList.remove("tab-active");
     gray.classList.remove("tab-active");
+    new_detection.classList.remove("tab-active");
+    new_gray.classList.remove("tab-active");
   });
   result.style.display = "block";
 
-  var $ = jQuery;
-
-  // =================================================================================================================
-  // init button
-  // =================================================================================================================
   const original = document.getElementById("original");
   const gray = document.getElementById("gray");
   const hsv = document.getElementById("hsv");
   const detection = document.getElementById("detection");
+
+  var $ = jQuery;
   // =================================================================================================================
   // Rgb
   // =================================================================================================================
   original.addEventListener("click", function (event) {
     original.classList.add("tab-active");
-    hsv.classList.remove("tab-active");
-    detection.classList.remove("tab-active");
-    gray.classList.remove("tab-active");
+    new_hsv.classList.remove("tab-active");
+    new_detection.classList.remove("tab-active");
+    new_gray.classList.remove("tab-active");
     image.src = srcBlobImg;
     event.preventDefault();
   });
   // =================================================================================================================
   // Rgb To Gray
   // =================================================================================================================
-  gray.addEventListener("click", function (event) {
-    gray.classList.add("tab-active");
-    hsv.classList.remove("tab-active");
-    detection.classList.remove("tab-active");
+  const new_gray = gray.cloneNode(true);
+  gray.parentNode.replaceChild(new_gray, gray);
+  new_gray.addEventListener("click", function () {
+    new_gray.classList.add("tab-active");
+    new_hsv.classList.remove("tab-active");
+    new_detection.classList.remove("tab-active");
     original.classList.remove("tab-active");
     const data = new FormData();
     data.append("file", blob, fname);
@@ -59,15 +61,16 @@ function process(blob, fname) {
         $("#showUploadImage").attr("src", srcNewImg);
       },
     });
-    event.preventDefault();
   });
   // =================================================================================================================
   // Rgb To Hsv
   // =================================================================================================================
-  hsv.addEventListener("click", function (event) {
-    hsv.classList.add("tab-active");
-    gray.classList.remove("tab-active");
-    detection.classList.remove("tab-active");
+  const new_hsv = hsv.cloneNode(true);
+  hsv.parentNode.replaceChild(new_hsv, hsv);
+  new_hsv.addEventListener("click", function (event) {
+    new_hsv.classList.add("tab-active");
+    new_gray.classList.remove("tab-active");
+    new_detection.classList.remove("tab-active");
     original.classList.remove("tab-active");
     const data = new FormData();
     data.append("file", blob, fname);
@@ -82,15 +85,16 @@ function process(blob, fname) {
         $("#showUploadImage").attr("src", srcNewImg);
       },
     });
-    event.preventDefault();
   });
   // =================================================================================================================
   // Rgb Detected
   // =================================================================================================================
-  detection.addEventListener("click", function (event) {
-    detection.classList.add("tab-active");
-    hsv.classList.remove("tab-active");
-    gray.classList.remove("tab-active");
+  const new_detection = detection.cloneNode(true);
+  detection.parentNode.replaceChild(new_detection, detection);
+  new_detection.addEventListener("click", function (event) {
+    new_detection.classList.add("tab-active");
+    new_hsv.classList.remove("tab-active");
+    new_gray.classList.remove("tab-active");
     original.classList.remove("tab-active");
     const data = new FormData();
     data.append("file", blob, fname);
@@ -105,7 +109,6 @@ function process(blob, fname) {
         $("#showUploadImage").attr("src", srcNewImg);
       },
     });
-    event.preventDefault();
   });
 }
 
