@@ -4,7 +4,7 @@ function loadFile(event) {
   process(blob, fname);
 }
 
-function process(blob, fname) {
+function process(blob, fname, isDrop) {
   const image = document.getElementById("showUploadImage");
   const upload = document.getElementById("myUploadImage");
   const result = document.getElementById("result");
@@ -110,6 +110,15 @@ function process(blob, fname) {
       },
     });
   });
+  if (isDrop) {
+    original.classList.add("tab-active");
+    new_hsv.classList.remove("tab-active");
+    hsv.classList.remove("tab-active");
+    detection.classList.remove("tab-active");
+    gray.classList.remove("tab-active");
+    new_detection.classList.remove("tab-active");
+    new_gray.classList.remove("tab-active");
+  }
 }
 
 // download
@@ -139,8 +148,21 @@ $(document).ready(function () {
   dropContainer.ondrop = function (e) {
     e.preventDefault();
     dropContainer.style.border = "3px dashed #4e7efe";
-    let blob = new Blob([e.dataTransfer.files[0]], { type: "image/jpeg" });
-    let fname = e.dataTransfer.files[0].name;
-    process(blob, fname);
+    let link = e.dataTransfer.getData("text/html");
+    let dropContext = $("<div>").append(link);
+    let imgURL = $(dropContext).find("img").attr("src");
+    if (imgURL) {
+      fetch(imgURL)
+        .then((res) => res.blob())
+        .then((blob) => {
+          let index = imgURL.lastIndexOf("/") + 1;
+          let filename = imgURL.substr(index);
+          process(blob, filename, true);
+        });
+    } else {
+      let blob = new Blob([e.dataTransfer.files[0]], { type: "image/jpeg" });
+      let fname = e.dataTransfer.files[0].name;
+      process(blob, fname, true);
+    }
   };
 });
