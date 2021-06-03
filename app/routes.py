@@ -14,7 +14,6 @@ def allowed_file(filename):
 
 def face_detect(input_path, file_name):
     # Processing img uploaded
-    print(input_path)
     img = cv.imread(input_path)         # Read image
     if img is None:
         print("Không tìm thấy file ảnh")
@@ -38,7 +37,6 @@ def face_detect(input_path, file_name):
 
 def rgb_to_gray(input_path, file_name):
     # Processing img uploaded
-    print(input_path)
     img = cv.imread(input_path)         # Read image
     if img is None:
         print("Không tìm thấy file ảnh")
@@ -58,7 +56,6 @@ def rgb_to_gray(input_path, file_name):
 
 def rgb_to_hsv(input_path, file_name):
     # Processing img uploaded
-    print(input_path)
     img = cv.imread(input_path)         # Read image
     if img is None:
         print("Không tìm thấy file ảnh")
@@ -75,43 +72,45 @@ def rgb_to_hsv(input_path, file_name):
     cv.destroyAllWindows()
     return send_path
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/gray', methods=['POST'])
+def gray():
+    file = request.files['file']
+    if file and allowed_file(file.filename):
+        fileName = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], fileName))
+
+        file_path = "./app/static/img_Uploads/" + str(fileName)
+        res = rgb_to_gray(file_path, fileName)
+        res = str(res)
+        return jsonify(data=res)
+
+@app.route('/hsv', methods=['POST'])
+def hsv():
+    file = request.files['file']
+    if file and allowed_file(file.filename):
+        fileName = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], fileName))
+
+        file_path = "./app/static/img_Uploads/" + str(fileName)
+        res = rgb_to_hsv(file_path, fileName)
+        res = str(res)
+        return jsonify(data=res)
+
+@app.route('/detection', methods=['POST'])
+def detection():
+    file = request.files['file']
+    if file and allowed_file(file.filename):
+        fileName = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], fileName))
+
+        file_path = "./app/static/img_Uploads/" + str(fileName)
+        res = face_detect(file_path, fileName)
+        res = str(res)
+        return jsonify(data=res)
+
+
+@app.route('/', methods=['GET'])
 def index():
-    if request.method == 'POST':
-        type_processing = list(request.files.keys())[0]
-        if type_processing == 'Img_RGB_To_Gray':
-            file = request.files['Img_RGB_To_Gray']
-            if file and allowed_file(file.filename):
-                fileName = secure_filename(file.filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], fileName))
-
-                file_path = "./app/static/img_Uploads/" + str(fileName)
-                res = rgb_to_gray(file_path, fileName)
-                res = str(res)
-                return jsonify(data=res)
-
-        elif type_processing == 'Img_RGB_To_HSV':
-            file = request.files['Img_RGB_To_HSV']
-            if file and allowed_file(file.filename):
-                fileName = secure_filename(file.filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], fileName))
-
-                file_path = "./app/static/img_Uploads/" + str(fileName)
-                res = rgb_to_hsv(file_path, fileName)
-                res = str(res)
-                return jsonify(data=res)
-
-        elif type_processing == 'Img_Face_Detection':
-            file = request.files['Img_Face_Detection']
-            if file and allowed_file(file.filename):
-                fileName = secure_filename(file.filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], fileName))
-
-                file_path = "./app/static/img_Uploads/" + str(fileName)
-                res = face_detect(file_path, fileName)
-                res = str(res)
-                return jsonify(data=res)
-
     return render_template("index.html")
 
 

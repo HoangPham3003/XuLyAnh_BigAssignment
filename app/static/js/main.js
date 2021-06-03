@@ -36,6 +36,7 @@ function process(blob, fname) {
     detection.classList.remove("tab-active");
     gray.classList.remove("tab-active");
     image.src = srcBlobImg;
+    event.preventDefault();
   });
   // =================================================================================================================
   // Rgb To Gray
@@ -45,10 +46,10 @@ function process(blob, fname) {
     hsv.classList.remove("tab-active");
     detection.classList.remove("tab-active");
     original.classList.remove("tab-active");
-    var data = new FormData();
-    data.append("Img_RGB_To_Gray", blob, fname);
+    const data = new FormData();
+    data.append("file", blob, fname);
     $.ajax({
-      url: "/",
+      url: "/gray",
       type: "POST",
       processData: false,
       contentType: false,
@@ -58,6 +59,7 @@ function process(blob, fname) {
         $("#showUploadImage").attr("src", srcNewImg);
       },
     });
+    event.preventDefault();
   });
   // =================================================================================================================
   // Rgb To Hsv
@@ -67,10 +69,10 @@ function process(blob, fname) {
     gray.classList.remove("tab-active");
     detection.classList.remove("tab-active");
     original.classList.remove("tab-active");
-    var data = new FormData();
-    data.append("Img_RGB_To_HSV", blob, fname);
+    const data = new FormData();
+    data.append("file", blob, fname);
     $.ajax({
-      url: "/",
+      url: "/hsv",
       type: "POST",
       processData: false,
       contentType: false,
@@ -80,6 +82,7 @@ function process(blob, fname) {
         $("#showUploadImage").attr("src", srcNewImg);
       },
     });
+    event.preventDefault();
   });
   // =================================================================================================================
   // Rgb Detected
@@ -89,10 +92,10 @@ function process(blob, fname) {
     hsv.classList.remove("tab-active");
     gray.classList.remove("tab-active");
     original.classList.remove("tab-active");
-    var data = new FormData();
-    data.append("Img_Face_Detection", blob, fname);
+    const data = new FormData();
+    data.append("file", blob, fname);
     $.ajax({
-      url: "/",
+      url: "/detection",
       type: "POST",
       processData: false,
       contentType: false,
@@ -102,6 +105,7 @@ function process(blob, fname) {
         $("#showUploadImage").attr("src", srcNewImg);
       },
     });
+    event.preventDefault();
   });
 }
 
