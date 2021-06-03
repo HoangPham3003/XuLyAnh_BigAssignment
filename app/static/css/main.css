@@ -58,6 +58,7 @@ footer {
   height: auto;
   padding: 50px 15px;
   padding-top: 130px;
+  position: relative;
 }
 
 .upload-section {
@@ -189,4 +190,11 @@ footer {
 
 #download {
   display: none;
+}
+
+.error {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  color: red;
 }

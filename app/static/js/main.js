@@ -132,6 +132,7 @@ function downloadImage() {
 // drag and drop
 $(document).ready(function () {
   const dropContainer = document.getElementById("dropContainer");
+  const error = document.getElementById("err");
 
   dropContainer.ondragover = function (e) {
     e.preventDefault();
@@ -155,14 +156,26 @@ $(document).ready(function () {
       fetch(imgURL)
         .then((res) => res.blob())
         .then((blob) => {
+          error.style.display = "none";
           let index = imgURL.lastIndexOf("/") + 1;
           let filename = imgURL.substr(index);
           process(blob, filename, true);
+        })
+        .catch(() => {
+          error.style.display = "block";
         });
     } else {
-      let blob = new Blob([e.dataTransfer.files[0]], { type: "image/jpeg" });
-      let fname = e.dataTransfer.files[0].name;
-      process(blob, fname, true);
+      const file = e.dataTransfer.files[0];
+      const fileType = file["type"];
+      const validImageTypes = ["image/gif", "image/jpeg", "image/png"];
+      if (!validImageTypes.includes(fileType)) {
+        error.style.display = "block";
+      } else {
+        error.style.display = "none";
+        let blob = new Blob([file], { type: "image/jpeg" });
+        let fname = file.name;
+        process(blob, fname, true);
+      }
     }
   };
 });
