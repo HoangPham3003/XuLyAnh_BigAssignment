@@ -140,7 +140,7 @@ $(document).ready(function () {
     return false;
   };
 
-  dropContainer.ondragend = function (e) {
+  dropContainer.ondragleave = function (e) {
     e.preventDefault();
     dropContainer.style.border = "3px dashed #4e7efe";
     return false;
@@ -159,9 +159,16 @@ $(document).ready(function () {
           error.style.display = "none";
           let index = imgURL.lastIndexOf("/") + 1;
           let filename = imgURL.substr(index);
+          if (!filename.includes(".")) {
+            error.innerText = "⚠️ Không thể kéo ảnh này, hãy mở nó ra rồi kéo";
+            error.style.display = "block";
+            return;
+          }
           process(blob, filename, true);
         })
         .catch(() => {
+          error.innerText =
+            "⚠️ Không thể upload file này, vui lòng upload file khác";
           error.style.display = "block";
         });
     } else {
@@ -169,6 +176,8 @@ $(document).ready(function () {
       const fileType = file["type"];
       const validImageTypes = ["image/gif", "image/jpeg", "image/png"];
       if (!validImageTypes.includes(fileType)) {
+        error.innerText =
+          "⚠️ Không thể upload file này, vui lòng upload file khác";
         error.style.display = "block";
       } else {
         error.style.display = "none";
