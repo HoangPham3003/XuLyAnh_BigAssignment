@@ -140,7 +140,7 @@ $(document).ready(function () {
     return false;
   };
 
-  dropContainer.ondragend = function (e) {
+  dropContainer.ondragleave = function (e) {
     e.preventDefault();
     dropContainer.style.border = "3px dashed #4e7efe";
     return false;
