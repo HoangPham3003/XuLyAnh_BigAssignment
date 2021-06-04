@@ -17,6 +17,7 @@ body {
   position: fixed;
   width: 100%;
   background-color: white;
+  z-index: 1000;
 }
 
 .logo {
@@ -58,6 +59,7 @@ footer {
   height: auto;
   padding: 50px 15px;
   padding-top: 130px;
+  position: relative;
 }
 
 .upload-section {
@@ -125,7 +127,6 @@ footer {
   grid-template-columns: 1fr 1fr;
   width: 80%;
   margin: 0px auto;
-  margin-bottom: 50px;
 }
 
 .img-upload {
@@ -168,6 +169,7 @@ footer {
   justify-content: center;
   align-items: center;
   flex: 1;
+  margin-top: 50px;
 }
 
 #about div img {
@@ -187,6 +189,13 @@ footer {
   display: none;
 }
 
-/* #download {
+#download {
   display: none;
-} */
+}
+
+.error {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  color: red;
+}
