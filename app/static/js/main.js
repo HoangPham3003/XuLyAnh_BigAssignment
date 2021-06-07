@@ -12,12 +12,20 @@ function process(blob, fname, isDrop) {
   image.src = srcBlobImg;
   upload.addEventListener("input", function () {
     original.classList.add("tab-active");
-    new_hsv.classList.remove("tab-active");
     hsv.classList.remove("tab-active");
     detection.classList.remove("tab-active");
+    thresholding.classList.remove("tab-active");
     gray.classList.remove("tab-active");
+    sobelX.classList.remove("tab-active");
+    sobelY.classList.remove("tab-active");
+    laplace.classList.remove("tab-active");
+    new_hsv.classList.remove("tab-active");
     new_detection.classList.remove("tab-active");
     new_gray.classList.remove("tab-active");
+    new_thresholding.classList.remove("tab-active");
+    new_sobelX.classList.remove("tab-active");
+    new_sobelY.classList.remove("tab-active");
+    new_laplace.classList.remove("tab-active");
   });
   result.style.display = "block";
 
@@ -26,6 +34,9 @@ function process(blob, fname, isDrop) {
   const hsv = document.getElementById("hsv");
   const detection = document.getElementById("detection");
   const thresholding = document.getElementById("thresholding");
+  const sobelX = document.getElementById("sobel-x");
+  const sobelY = document.getElementById("sobel-y");
+  const laplace = document.getElementById("laplace");
 
   var $ = jQuery;
   // =================================================================================================================
@@ -36,6 +47,10 @@ function process(blob, fname, isDrop) {
     new_hsv.classList.remove("tab-active");
     new_detection.classList.remove("tab-active");
     new_gray.classList.remove("tab-active");
+    new_thresholding.classList.remove("tab-active");
+    new_sobelX.classList.remove("tab-active");
+    new_sobelY.classList.remove("tab-active");
+    new_laplace.classList.remove("tab-active");
     image.src = srcBlobImg;
     event.preventDefault();
   });
@@ -49,6 +64,10 @@ function process(blob, fname, isDrop) {
     new_hsv.classList.remove("tab-active");
     new_detection.classList.remove("tab-active");
     original.classList.remove("tab-active");
+    new_thresholding.classList.remove("tab-active");
+    new_sobelX.classList.remove("tab-active");
+    new_sobelY.classList.remove("tab-active");
+    new_laplace.classList.remove("tab-active");
     const data = new FormData();
     data.append("file", blob, fname);
     $.ajax({
@@ -73,6 +92,10 @@ function process(blob, fname, isDrop) {
     new_gray.classList.remove("tab-active");
     new_detection.classList.remove("tab-active");
     original.classList.remove("tab-active");
+    new_thresholding.classList.remove("tab-active");
+    new_sobelX.classList.remove("tab-active");
+    new_sobelY.classList.remove("tab-active");
+    new_laplace.classList.remove("tab-active");
     const data = new FormData();
     data.append("file", blob, fname);
     $.ajax({
@@ -97,6 +120,10 @@ function process(blob, fname, isDrop) {
     new_hsv.classList.remove("tab-active");
     new_gray.classList.remove("tab-active");
     original.classList.remove("tab-active");
+    new_thresholding.classList.remove("tab-active");
+    new_sobelX.classList.remove("tab-active");
+    new_sobelY.classList.remove("tab-active");
+    new_laplace.classList.remove("tab-active");
     const data = new FormData();
     data.append("file", blob, fname);
     $.ajax({
@@ -111,24 +138,139 @@ function process(blob, fname, isDrop) {
       },
     });
   });
-  if (isDrop) {
-    original.classList.add("tab-active");
-    new_hsv.classList.remove("tab-active");
-    hsv.classList.remove("tab-active");
-    detection.classList.remove("tab-active");
-    gray.classList.remove("tab-active");
-    new_detection.classList.remove("tab-active");
-    new_gray.classList.remove("tab-active");
-  }
-}
+
   // =================================================================================================================
   // Thresholding
   // =================================================================================================================
+  const new_thresholding = thresholding.cloneNode(true);
+  thresholding.parentNode.replaceChild(new_thresholding, thresholding);
+  new_thresholding.addEventListener("click", function (event) {
+    new_thresholding.classList.add("tab-active");
+    new_hsv.classList.remove("tab-active");
+    new_gray.classList.remove("tab-active");
+    new_detection.classList.remove("tab-active");
+    original.classList.remove("tab-active");
+    new_sobelX.classList.remove("tab-active");
+    new_sobelY.classList.remove("tab-active");
+    new_laplace.classList.remove("tab-active");
+    const data = new FormData();
+    data.append("file", blob, fname);
+    $.ajax({
+      url: "/thresholding",
+      type: "POST",
+      processData: false,
+      contentType: false,
+      data: data,
+      success: (ret) => {
+        var srcNewImg = ret.data;
+        $("#showUploadImage").attr("src", srcNewImg);
+      },
+    });
+  });
 
+  // =================================================================================================================
+  // Sobel X
+  // =================================================================================================================
+  const new_sobelX = sobelX.cloneNode(true);
+  sobelX.parentNode.replaceChild(new_sobelX, sobelX);
+  new_sobelX.addEventListener("click", function (event) {
+    new_sobelX.classList.add("tab-active");
+    new_hsv.classList.remove("tab-active");
+    new_gray.classList.remove("tab-active");
+    new_detection.classList.remove("tab-active");
+    original.classList.remove("tab-active");
+    new_thresholding.classList.remove("tab-active");
+    new_sobelY.classList.remove("tab-active");
+    new_laplace.classList.remove("tab-active");
+    const data = new FormData();
+    data.append("file", blob, fname);
+    $.ajax({
+      url: "/sobelX",
+      type: "POST",
+      processData: false,
+      contentType: false,
+      data: data,
+      success: (ret) => {
+        var srcNewImg = ret.data;
+        $("#showUploadImage").attr("src", srcNewImg);
+      },
+    });
+  });
 
+  // =================================================================================================================
+  // Sobel Y
+  // =================================================================================================================
+  const new_sobelY = sobelY.cloneNode(true);
+  sobelY.parentNode.replaceChild(new_sobelY, sobelY);
+  new_sobelY.addEventListener("click", function (event) {
+    new_sobelY.classList.add("tab-active");
+    new_hsv.classList.remove("tab-active");
+    new_gray.classList.remove("tab-active");
+    new_detection.classList.remove("tab-active");
+    original.classList.remove("tab-active");
+    new_thresholding.classList.remove("tab-active");
+    new_sobelX.classList.remove("tab-active");
+    new_laplace.classList.remove("tab-active");
+    const data = new FormData();
+    data.append("file", blob, fname);
+    $.ajax({
+      url: "/sobelY",
+      type: "POST",
+      processData: false,
+      contentType: false,
+      data: data,
+      success: (ret) => {
+        var srcNewImg = ret.data;
+        $("#showUploadImage").attr("src", srcNewImg);
+      },
+    });
+  });
 
+  // =================================================================================================================
+  // Laplace
+  // =================================================================================================================
+  const new_laplace = laplace.cloneNode(true);
+  laplace.parentNode.replaceChild(new_laplace, laplace);
+  new_laplace.addEventListener("click", function (event) {
+    new_laplace.classList.add("tab-active");
+    new_hsv.classList.remove("tab-active");
+    new_gray.classList.remove("tab-active");
+    new_detection.classList.remove("tab-active");
+    original.classList.remove("tab-active");
+    new_thresholding.classList.remove("tab-active");
+    new_sobelX.classList.remove("tab-active");
+    new_sobelY.classList.remove("tab-active");
+    const data = new FormData();
+    data.append("file", blob, fname);
+    $.ajax({
+      url: "/laplace",
+      type: "POST",
+      processData: false,
+      contentType: false,
+      data: data,
+      success: (ret) => {
+        var srcNewImg = ret.data;
+        $("#showUploadImage").attr("src", srcNewImg);
+      },
+    });
+  });
 
-
+  if (isDrop) {
+    original.classList.add("tab-active");
+    hsv.classList.remove("tab-active");
+    detection.classList.remove("tab-active");
+    gray.classList.remove("tab-active");
+    thresholding.classList.remove("tab-active");
+    sobelX.classList.remove("tab-active");
+    sobelY.classList.remove("tab-active");
+    new_hsv.classList.remove("tab-active");
+    new_detection.classList.remove("tab-active");
+    new_gray.classList.remove("tab-active");
+    new_thresholding.classList.remove("tab-active");
+    new_sobelX.classList.remove("tab-active");
+    new_sobelY.classList.remove("tab-active");
+  }
+}
 
   // download
 function downloadImage() {

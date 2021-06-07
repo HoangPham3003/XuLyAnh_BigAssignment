@@ -80,16 +80,75 @@ def thresholding_binary(input_path, file_name):
         print("Không tìm thấy file ảnh")
 
     # Processing img
-    img = cv.cvtColor(img, cv.COLOR_RGB2HSV)
+    img = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+    ret, img = cv.threshold(img, 127, 255, cv.THRESH_BINARY)
 
     # Create link img render
     fname = file_name.split(".")[0]
-    output_path = "./app/static/img_Render/" + fname + "_RgbToHsv.jpg"
+    output_path = "./app/static/img_Render/" + fname + "_ThresholdBinary.jpg"
     cv.imwrite(output_path, img)
-    send_path = "../static/img_Render/" + fname + "_RgbToHsv.jpg"
+    send_path = "../static/img_Render/" + fname + "_ThresholdBinary.jpg"
 
     cv.destroyAllWindows()
     return send_path
+
+
+def edge_detect_sobel_x(input_path, file_name):
+    # Processing img uploaded
+    img = cv.imread(input_path)  # Read image
+    if img is None:
+        print("Không tìm thấy file ảnh")
+
+    # Processing img
+    img = cv.Sobel(img, cv.CV_64F, 1, 0, ksize=5)
+
+    # Create link img render
+    fname = file_name.split(".")[0]
+    output_path = "./app/static/img_Render/" + fname + "_Sobel_X.jpg"
+    cv.imwrite(output_path, img)
+    send_path = "../static/img_Render/" + fname + "_Sobel_X.jpg"
+
+    cv.destroyAllWindows()
+    return send_path
+
+
+def edge_detect_sobel_y(input_path, file_name):
+    # Processing img uploaded
+    img = cv.imread(input_path)  # Read image
+    if img is None:
+        print("Không tìm thấy file ảnh")
+
+    # Processing img
+    img = cv.Sobel(img, cv.CV_64F, 0, 1, ksize=5)
+
+    # Create link img render
+    fname = file_name.split(".")[0]
+    output_path = "./app/static/img_Render/" + fname + "_Sobel_Y.jpg"
+    cv.imwrite(output_path, img)
+    send_path = "../static/img_Render/" + fname + "_Sobel_Y.jpg"
+
+    cv.destroyAllWindows()
+    return send_path
+
+
+def edge_detect_laplace(input_path, file_name):
+    # Processing img uploaded
+    img = cv.imread(input_path)  # Read image
+    if img is None:
+        print("Không tìm thấy file ảnh")
+
+    # Processing img
+    img = cv.Laplacian(img, cv.CV_64F)
+
+    # Create link img render
+    fname = file_name.split(".")[0]
+    output_path = "./app/static/img_Render/" + fname + "_Laplace.jpg"
+    cv.imwrite(output_path, img)
+    send_path = "../static/img_Render/" + fname + "_Laplace.jpg"
+
+    cv.destroyAllWindows()
+    return send_path
+
 
 @app.route('/gray', methods=['POST'])
 def gray():
@@ -141,6 +200,50 @@ def thresholding():
         res = thresholding_binary(file_path, fileName)
         res = str(res)
         return jsonify(data=res)
+
+
+@app.route('/sobelX', methods=['POST'])
+def sobel_x():
+    file = request.files['file']
+    if file and allowed_file(file.filename):
+        fileName = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], fileName))
+
+        file_path = "./app/static/img_Uploads/" + str(fileName)
+        res = edge_detect_sobel_x(file_path, fileName)
+        res = str(res)
+        return jsonify(data=res)
+
+
+@app.route('/sobelY', methods=['POST'])
+def sobel_y():
+    file = request.files['file']
+    if file and allowed_file(file.filename):
+        fileName = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], fileName))
+
+        file_path = "./app/static/img_Uploads/" + str(fileName)
+        res = edge_detect_sobel_y(file_path, fileName)
+        res = str(res)
+        return jsonify(data=res)
+
+
+@app.route('/laplace', methods=['POST'])
+def laplace():
+    file = request.files['file']
+    if file and allowed_file(file.filename):
+        fileName = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], fileName))
+
+        file_path = "./app/static/img_Uploads/" + str(fileName)
+        res = edge_detect_laplace(file_path, fileName)
+        res = str(res)
+        return jsonify(data=res)
+
+
+@app.route("/favicon.ico")
+def favicon():
+    return "", 200
 
 
 @app.route('/', methods=['GET'])

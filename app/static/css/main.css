@@ -1,6 +1,7 @@
 * {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Roboto', 'Noto', sans-serif;
 }
+
 body {
   margin: 0;
   padding: 0;
@@ -74,7 +75,7 @@ footer {
 
 .btn-upload {
   cursor: pointer;
-  font-size: 15px;
+  font-size: 22px;
   height: 57px;
   line-height: 57px;
   display: inline-block;
@@ -83,6 +84,10 @@ footer {
   background: #4e7efe;
   margin-bottom: 10px;
   border-radius: 4px;
+}
+
+.btn-upload:hover {
+  background-color: #3377ff;
 }
 
 .upload-section p {
@@ -105,17 +110,31 @@ footer {
 
 .tab-menu li {
   float: left;
-  width: 100px;
+  width: 120px;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
+  margin: 0px;
+  padding: 0px;
 }
 
 .tab-menu li a {
-  color: #999;
   font-weight: 600;
+  width: 120px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+
+.tab-menu li a:hover {
+  background-color: #3377ff;
+  color: white;
 }
 
 .image {
@@ -149,12 +168,17 @@ footer {
   background: #2d8eff;
   border-radius: 4px;
   color: white;
+  font-size: 18px;
+}
+
+.download button:hover{
+  background-color: #3377ff;
 }
 
 .tab-active {
-  color: #2d8eff;
+  background-color: #2d8eff;
+  color: white;
   border: none;
-  background: #e3f0ff;
 }
 
 #about {
