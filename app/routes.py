@@ -72,6 +72,25 @@ def rgb_to_hsv(input_path, file_name):
     cv.destroyAllWindows()
     return send_path
 
+
+def thresholding_binary(input_path, file_name):
+    # Processing img uploaded
+    img = cv.imread(input_path)  # Read image
+    if img is None:
+        print("Không tìm thấy file ảnh")
+
+    # Processing img
+    img = cv.cvtColor(img, cv.COLOR_RGB2HSV)
+
+    # Create link img render
+    fname = file_name.split(".")[0]
+    output_path = "./app/static/img_Render/" + fname + "_RgbToHsv.jpg"
+    cv.imwrite(output_path, img)
+    send_path = "../static/img_Render/" + fname + "_RgbToHsv.jpg"
+
+    cv.destroyAllWindows()
+    return send_path
+
 @app.route('/gray', methods=['POST'])
 def gray():
     file = request.files['file']
@@ -83,6 +102,7 @@ def gray():
         res = rgb_to_gray(file_path, fileName)
         res = str(res)
         return jsonify(data=res)
+
 
 @app.route('/hsv', methods=['POST'])
 def hsv():
@@ -96,6 +116,7 @@ def hsv():
         res = str(res)
         return jsonify(data=res)
 
+
 @app.route('/detection', methods=['POST'])
 def detection():
     file = request.files['file']
@@ -105,6 +126,19 @@ def detection():
 
         file_path = "./app/static/img_Uploads/" + str(fileName)
         res = face_detect(file_path, fileName)
+        res = str(res)
+        return jsonify(data=res)
+
+
+@app.route('/thresholding', methods=['POST'])
+def thresholding():
+    file = request.files['file']
+    if file and allowed_file(file.filename):
+        fileName = secure_filename(file.filename)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], fileName))
+
+        file_path = "./app/static/img_Uploads/" + str(fileName)
+        res = thresholding_binary(file_path, fileName)
         res = str(res)
         return jsonify(data=res)
 

@@ -25,6 +25,7 @@ function process(blob, fname, isDrop) {
   const gray = document.getElementById("gray");
   const hsv = document.getElementById("hsv");
   const detection = document.getElementById("detection");
+  const thresholding = document.getElementById("thresholding");
 
   var $ = jQuery;
   // =================================================================================================================
@@ -120,8 +121,16 @@ function process(blob, fname, isDrop) {
     new_gray.classList.remove("tab-active");
   }
 }
+  // =================================================================================================================
+  // Thresholding
+  // =================================================================================================================
 
-// download
+
+
+
+
+
+  // download
 function downloadImage() {
   const download = document.getElementById("download");
   const image = document.getElementById("showUploadImage");
