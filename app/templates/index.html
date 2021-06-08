@@ -2,11 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Xử lý ảnh | Thắng, Hoàng, Quốc</title>
     <link rel="stylesheet" href="../static/css/main.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800&display=swap"
       rel="stylesheet"
     />
     <script src="../static/js/jquery.min.js"></script>
@@ -14,7 +15,7 @@
   </head>
   <body>
     <nav class="navbar">
-      <a class="logo"> XuLyAnh </a>
+      <a class="logo" href="/"> XuLyAnh </a>
       <div class="menu">
         <a href="#">App</a>
         <a href="#about">About</a>
@@ -27,7 +28,8 @@
       accept="image/*"
       onchange="loadFile(event)"
     />
-    <div class="upload">
+    <h1 id="welcome">Upload an image to use app</h1>
+    <div class="upload" id="uploadview">
       <div class="upload-section" id="dropContainer">
         <label class="btn-upload" for="myUploadImage">UPLOAD IMAGE</label>
         <p>or Drag and Drop images</p>
@@ -37,7 +39,7 @@
       </p>
     </div>
     <div id="result">
-      <ul class="tab-menu">
+      <ul class="tab-menu" id="tab">
         <li class="tab-active" id="original">
           <a> Original </a>
         </li>
@@ -66,6 +68,7 @@
       <div class="image">
         <img class="img-upload" id="showUploadImage" />
         <div class="download">
+          <p>Click vô đây nếu bạn muốn tải ảnh về!</p>
           <button onclick="downloadImage()">Download</button>
           <a id="download" download></a>
         </div>
@@ -89,7 +92,7 @@
       </div>
     </div>
     <footer>
-      <b>Copyright 2021 Xu Ly Anh - Thắng, Hoàng, Quốc</b>
+      <p>Copyright 2021 Xu Ly Anh - Thắng, Hoàng, Quốc</p>
     </footer>
   </body>
 </html>

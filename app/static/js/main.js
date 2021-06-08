@@ -8,6 +8,8 @@ function process(blob, fname, isDrop) {
   const image = document.getElementById("showUploadImage");
   const upload = document.getElementById("myUploadImage");
   const result = document.getElementById("result");
+  const welcome = document.getElementById("welcome");
+  const uploadview = document.getElementById("uploadview");
   let srcBlobImg = URL.createObjectURL(blob);
   image.src = srcBlobImg;
   upload.addEventListener("input", function () {
@@ -28,6 +30,14 @@ function process(blob, fname, isDrop) {
     new_laplace.classList.remove("tab-active");
   });
   result.style.display = "block";
+  welcome.style.display = "none";
+  uploadview.style.paddingTop = "130px";
+  result.scrollIntoView(true);
+  let scrolledY = window.scrollY;
+
+  if (scrolledY) {
+    window.scroll(0, scrolledY - 130);
+  }
 
   const original = document.getElementById("original");
   const gray = document.getElementById("gray");
@@ -269,10 +279,12 @@ function process(blob, fname, isDrop) {
     new_thresholding.classList.remove("tab-active");
     new_sobelX.classList.remove("tab-active");
     new_sobelY.classList.remove("tab-active");
+    new_laplace.classList.remove("tab-active");
+    laplace.classList.remove("tab-active");
   }
 }
 
-  // download
+// download
 function downloadImage() {
   const download = document.getElementById("download");
   const image = document.getElementById("showUploadImage");
@@ -310,8 +322,21 @@ $(document).ready(function () {
           error.style.display = "none";
           let index = imgURL.lastIndexOf("/") + 1;
           let filename = imgURL.substr(index);
-          if (!filename.includes(".")) {
+          let allowedName = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+          if (imgURL.includes("base64")) {
             error.innerText = "⚠️ Không thể kéo ảnh này, hãy mở nó ra rồi kéo";
+            error.style.display = "block";
+            return;
+          }
+          if (!allowedName.exec(filename)) {
+            error.innerText =
+              "⚠️ Không thể upload file này, vui lòng upload file khác";
+            error.style.display = "block";
+            return;
+          }
+          if (!filename.includes(".")) {
+            error.innerText =
+              "⚠️ Không thể upload file này, vui lòng upload file khác";
             error.style.display = "block";
             return;
           }

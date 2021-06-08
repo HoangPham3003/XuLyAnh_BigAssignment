@@ -1,7 +1,7 @@
 * {
-  font-family: 'Roboto', 'Noto', sans-serif;
+  font-family: "Montserrat", sans-serif;
+  box-sizing: border-box;
 }
-
 body {
   margin: 0;
   padding: 0;
@@ -12,22 +12,28 @@ body {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  height: 40px;
+  height: 80px;
   padding: 20px 25px;
-  box-shadow: 0px 1px 3px 0px rgb(0 0 0);
+  box-shadow: 0px 1px 3px 0px rgb(0 0 0 / 10%);
   position: fixed;
   width: 100%;
   background-color: white;
   z-index: 1000;
+  top: 0;
+  left: 0;
+}
+
+h1 {
+  padding-top: 110px;
+  text-align: center;
+  margin-bottom: 50px;
 }
 
 .logo {
   font-size: large;
-  font-weight: bold;
-}
-
-.menu {
-  margin: 0px 30px;
+  font-weight: 800;
+  text-decoration: none;
+  color: black;
 }
 
 .menu a {
@@ -36,17 +42,16 @@ body {
   color: black;
 }
 
-.menu a:hover {
-  color: rgb(78, 126, 254);
-  font-weight: bold;
+.menu a:last-child {
+  margin: 0;
 }
 
-.active {
+.menu a:hover {
   color: rgb(78, 126, 254);
 }
 
 footer {
-  height: 150px;
+  height: 200px;
   width: 100%;
   background-color: black;
   color: white;
@@ -55,11 +60,14 @@ footer {
   justify-content: center;
 }
 
+footer p {
+  font-weight: bold;
+}
+
 .upload {
   background-color: #f6f7fa;
   height: auto;
   padding: 50px 15px;
-  padding-top: 130px;
   position: relative;
 }
 
@@ -75,7 +83,7 @@ footer {
 
 .btn-upload {
   cursor: pointer;
-  font-size: 22px;
+  font-size: 15px;
   height: 57px;
   line-height: 57px;
   display: inline-block;
@@ -84,10 +92,7 @@ footer {
   background: #4e7efe;
   margin-bottom: 10px;
   border-radius: 4px;
-}
-
-.btn-upload:hover {
-  background-color: #3377ff;
+  font-weight: bold;
 }
 
 .upload-section p {
@@ -99,9 +104,9 @@ footer {
   border: solid 1px #ddd;
   border-bottom: none;
   background: #f8fbff;
-  box-shadow: 0 5px 3px 1px rgb(0 0 0);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   list-style: none;
-  height: 40px;
+  height: 50px;
   margin: 0px auto;
   padding: 0px;
   width: 80%;
@@ -110,42 +115,30 @@ footer {
 
 .tab-menu li {
   float: left;
-  width: 120px;
+  width: fit-content;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
-  margin: 0px;
-  padding: 0px;
+  padding: 0px 20px;
 }
 
 .tab-menu li a {
-  font-weight: 600;
-  width: 120px;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  margin: 0px;
-  padding: 0px;
-}
-
-.tab-menu li a:hover {
-  background-color: #3377ff;
-  color: white;
+  color: #999;
+  font-weight: bold;
 }
 
 .image {
-  border: solid 1px #ddd;
+  border: 1px solid #ddd;
   border-top: none;
-  background: #f8fbff;
-  box-shadow: 0 5px 3px 1px rgb(0 0 0);
+  background: #e3f0ff;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: 80%;
   margin: 0px auto;
+  margin-bottom: 195px;
 }
 
 .img-upload {
@@ -157,34 +150,36 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 .download button {
   padding: 13px 65px;
   text-transform: unset;
   cursor: pointer;
-  font-weight: 600;
   border: 2px solid #2d8eff;
   background: #2d8eff;
   border-radius: 4px;
   color: white;
-  font-size: 18px;
+  font-weight: bold;
 }
 
-.download button:hover{
-  background-color: #3377ff;
-}
-
-.tab-active {
-  background-color: #2d8eff;
-  color: white;
+.tab-active,
+.tab-menu li:hover {
   border: none;
+  background: #e3f0ff;
+}
+
+.tab-active a,
+.tab-menu li:hover a {
+  color: #2d8eff !important;
 }
 
 #about {
   display: flex;
   flex-flow: row wrap;
-  margin-bottom: 50px;
+  padding-bottom: 50px;
+  background-color: #f6f7fa;
 }
 
 #about div {
@@ -222,4 +217,15 @@ footer {
   position: absolute;
   bottom: 0;
   color: red;
+}
+
+@media only screen and (min-width: 1280px) {
+  .navbar {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+  .upload {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
 }
