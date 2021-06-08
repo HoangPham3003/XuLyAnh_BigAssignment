@@ -95,6 +95,10 @@ footer p {
   font-weight: bold;
 }
 
+.btn-upload:hover {
+  background-color: #3377ff;
+}
+
 .upload-section p {
   color: #949494;
   font-size: 13px;
@@ -162,6 +166,10 @@ footer p {
   border-radius: 4px;
   color: white;
   font-weight: bold;
+}
+
+.download button:hover {
+  background-color: #3377ff;
 }
 
 .tab-active,
